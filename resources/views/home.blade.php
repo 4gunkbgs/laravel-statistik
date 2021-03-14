@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 bg-white form-container">
-                <form method="post" action="/" id="forminput" name="global">
+                <form method="post" action="/" id="forminput">
                     <h2>Silahkan Masukkan Skor</h2>
                     <br />
                     <div class="form-group">
@@ -18,7 +18,8 @@
                         <input type="text" class="form-control"
                             placeholder="Masukkan Skor" name="skor" required />
                     </div>
-                    <input type="submit" class="btn btn-primary daftar-btn" name="submit" value="Input">                    
+                    <input type="submit" class="btn btn-primary daftar-btn" name="submit" value="Input"> 
+                    @csrf                   
                 </form>
                 <br>
                 <table class="table">
