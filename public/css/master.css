@@ -1,0 +1,29 @@
+* {
+    font-family: sans-serif;
+}
+
+/* box di tugas3.php */
+
+.container-margin {
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+}
+
+.box-container {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px #000;
+}
+
+.sosial a i {
+    font-size: 30px;
+    color: black;
+}
+
+.form-container {
+    padding: 30px;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px #000;
+}
