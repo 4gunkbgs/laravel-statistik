@@ -20,13 +20,16 @@ class HomeController extends Controller
        $frekuensi = Anggota::select('skor', DB::raw('count(*) as frekuensi'))  //ambil skor, hitung banyak skor taruh di tabel frekuensi
                                 ->groupBy('skor')                              //urutkan sesuai skor
                                 ->get();
-                                
-                            
+       $totalskor = Anggota::sum('skor');              
+       $totalfrekuensi = Anggota::count('skor');        //karena total frekuensi = banyaknya skor yang ada
+
        return view('/home', ['users' => $anggota,
                             'max' => $maxSkor, 
                             'min' => $minSkor, 
                             'rata2' => $rata2,
-                            'frekuensi' => $frekuensi]);    //tampilkan home.blade
+                            'frekuensi' => $frekuensi,
+                            'totalskor' => $totalskor,
+                            'totalfrekuensi' => $totalfrekuensi]);    //tampilkan home.blade
    }
 
    public function edit($id)

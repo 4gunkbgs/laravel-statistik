@@ -25,6 +25,14 @@
                                 </tr>
                                  
                                 @endforeach
+                                <tr>
+                                    <td> <b>Total Skor:</b>  </td>
+                                    <td> {{ $totalskor }}</td>
+                                </tr>
+                                <tr>
+                                    <td> <b>Total Frekuensi:</b>  </td>
+                                    <td> {{ $totalfrekuensi }}</td>
+                                </tr>
                            </tbody>
                         </table>
                     </div>
@@ -46,6 +54,7 @@
                             placeholder="Masukkan Skor" name="skor" required />
                     </div>
                     <input type="submit" class="btn btn-primary daftar-btn" name="submit" value="Input">  {{-- tombol submit--}}
+                    
                     @csrf
                     
                     <label for="max" class="ml-4">Skor Maks: <b>{{ $max }}</b></label>

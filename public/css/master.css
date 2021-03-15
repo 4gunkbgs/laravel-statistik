@@ -12,7 +12,7 @@
 .box-container {
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px #000;
+    box-shadow: 0px 0px 10 0px rgb(0, 0, 0);
 }
 
 .sosial a i {
@@ -25,5 +25,5 @@
     margin-top: 5vh;
     margin-bottom: 5vh;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px #000;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.233);
 }
