@@ -17,10 +17,10 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', 'App\Http\Controllers\HomeController@index');
-Route::post('/', 'App\Http\Controllers\HomeController@store');
+Route::get('/', 'App\Http\Controllers\HomeController@index');       //route ke index
+Route::post('/', 'App\Http\Controllers\HomeController@store');      //route ke store (bagian input)
 
-Route::get('/edit/{id}', 'App\Http\Controllers\HomeController@edit');
-Route::put('/edit/{id}', 'App\Http\Controllers\HomeController@update');
+Route::get('/edit/{id}', 'App\Http\Controllers\HomeController@edit');   //route ke edit (bagian edit.blade)
+Route::put('/edit/{id}', 'App\Http\Controllers\HomeController@update'); //route ke update (setelah klik edit pada edit.blade)
 
-Route::delete('/delete/{id}', 'App\Http\Controllers\HomeController@delete');
+Route::delete('/delete/{id}', 'App\Http\Controllers\HomeController@delete');    //route ke delete (klik delete)

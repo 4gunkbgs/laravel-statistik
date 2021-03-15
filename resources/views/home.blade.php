@@ -3,9 +3,36 @@
 @section('content')
 
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8 bg-white form-container">
-                <form method="post" action="/" id="forminput">
+        <div class="row">
+            <div class="col-md-4 mr-auto">
+
+                <div class="row">
+                    <div class="col-12 bg-white form-container">
+                        <h2>Tabel Frekuensi</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td scope="col">Skor</td>
+                                    <td scope="col">Frekuensi</td>
+                                </tr>
+                           </thead>
+                           <tbody>
+                               @foreach ($frekuensi as $skor)
+                               
+                               <tr>
+                                   <td> {{ $skor->skor }} </td>
+                                   <td> {{ $skor->frekuensi }}</td>
+                                </tr>
+                                 
+                                @endforeach
+                           </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7 ml-auto bg-white form-container">
+                <form method="post" action="/" id="forminput">    {{-- setelah di submit, form akan mengarah ke route home--}}
                     <h2>Silahkan Masukkan Skor</h2>
                     <br />
                     <div class="form-group">
@@ -18,8 +45,12 @@
                         <input type="text" class="form-control"
                             placeholder="Masukkan Skor" name="skor" required />
                     </div>
-                    <input type="submit" class="btn btn-primary daftar-btn" name="submit" value="Input"> 
-                    @csrf                   
+                    <input type="submit" class="btn btn-primary daftar-btn" name="submit" value="Input">  {{-- tombol submit--}}
+                    @csrf
+                    
+                    <label for="max" class="ml-4">Skor Maks: <b>{{ $max }}</b></label>
+                    <label for="min" class="ml-4">Skor Min: <b>{{ $min }}</b></label>
+                    <label for="rata2" class="ml-4">Rata-Rata: <b>{{ $rata2 }}</b></label>
                 </form>
                 <br>
                 <table class="table">
@@ -28,18 +59,19 @@
                             <td scope="col">No</td>
                             <td scope="col">Nama</td>
                             <td scope="col">Skor</td>
+                            <td scope="col">Action</td>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
                         <tr>                             
-                            <th>{{ $loop->iteration }}</th>
+                            <th scope="row">{{ $loop->iteration }}</th>     
                             <td>{{ $user->nama }}</td>
                             <td>{{ $user->skor }}</td>
                             <td>
-                                <form name="delete" action="/delete/{{ $user->id }}" method="POST">
-                                    <a href='/edit/{{ $user->id }}' class="btn btn-outline-success">Edit</a>
-                                    @csrf
+                                <form name="delete" action="/delete/{{ $user->id }}" method="POST">     {{-- setelah klik hapus, form akan mengarah ke route delete--}}
+                                    <a href='/edit/{{ $user->id }}' class="btn btn-outline-success">Edit</a> {{-- setelah klik edit, maka akan di href ke route edit/{id} (edit.blade)--}}
+                                    @csrf               {{-- csrf token untuk tombol hapus--}}
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger">Hapus</button>
                                 </form>
@@ -50,8 +82,7 @@
                 </table>                
             </div>
         </div>
-        
-        <!-- Akhir Container -->
     </div>
+    <!-- Akhir Container -->
 
 @endsection

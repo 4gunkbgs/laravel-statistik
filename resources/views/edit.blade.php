@@ -5,8 +5,8 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8">
-                <form method="POST" action="/edit/{{ $anggota->id }}" class="bg-white form-container" id="forminput">
-                @csrf 
+                <form method="POST" action="/edit/{{ $anggota->id }}" class="bg-white form-container" id="forminput">   {{-- form akan mengarah ke route edit dengan method put --}}
+                @csrf                   {{-- csrf token untuk tombol edit --}}
                 @method('PUT')
                     <h2>Edit Data {{ $anggota->nama }}</h2>
                     <br />
