@@ -14,7 +14,8 @@ class HomeController extends Controller
        $anggota = Anggota::all();             
        $maxSkor = Anggota::max('skor');
        $minSkor = Anggota::min('skor');
-       $rata2 = Anggota::average('skor');
+       $rata2 = number_format(Anggota::average('skor'),3);
+       
        
        //untuk tabel frekuensi
        $frekuensi = Anggota::select('skor', DB::raw('count(*) as frekuensi'))  //ambil skor, hitung banyak skor taruh di tabel frekuensi
@@ -51,6 +52,16 @@ class HomeController extends Controller
            abort(404);
        }
 
+       $this->validate($request, 
+        [
+            'nama'      =>  'required|max:30',
+            'skor'      =>  'required|numeric|min:0|max:100'
+        ],
+        [
+            'skor.min'  =>  'Kolom Skor Hanya Bisa Diisi Angka 0-100',
+            'skor.max'  =>  'Kolom Skor Hanya Bisa Diisi Angka 0-100'
+        ]);
+
         $anggota->nama = $request->nama;    //tumpuk atribut tabel dengan yang diinput user
         $anggota->skor = $request->skor;        
         $anggota->save();
@@ -60,6 +71,16 @@ class HomeController extends Controller
 
    public function store(Request $request){     //untuk nyimpen
        
+        $this->validate($request, 
+        [
+            'nama'      =>  'required|max:30',
+            'skor'      =>  'required|numeric|min:0|max:100'
+        ],
+        [
+            'skor.min'  =>  'Kolom Skor Hanya Bisa Diisi Angka 0-100',
+            'skor.max'  =>  'Kolom Skor Hanya Bisa Diisi Angka 0-100'
+        ]);
+        
         $anggota = new Anggota;                 //buat objek baru
         $anggota->nama = $request->nama;        //simpen apa yang diinput user ke atribut tabel
         $anggota->skor = $request->skor;

@@ -46,12 +46,22 @@
                     <div class="form-group">
                         <label for="input1">Nama Mahasiswa</label>
                         <input type="text" class="form-control"
-                            placeholder="Masukkan Nama Mahasiswa" name="nama" required />
+                            placeholder="Masukkan Nama Mahasiswa" name="nama" value="{{ old('nama') }}">
+
+                            @if ($errors->has('nama'))
+                                <b>{{ $errors->first('nama') }}</b>
+                            @endif
+
                     </div>
                     <div class="form-group">
                         <label for="input2">Skor</label>
-                        <input type="text" class="form-control"
-                            placeholder="Masukkan Skor" name="skor" required />
+                        <input type="number" class="form-control"
+                            placeholder="Masukkan Skor" name="skor" value="{{ old('skor') }}">
+
+                            @if ($errors->has('skor'))
+                                <b>{{ $errors->first('skor') }}</b>
+                            @endif
+
                     </div>
                     <input type="submit" class="btn btn-primary daftar-btn" name="submit" value="Input">  {{-- tombol submit--}}
                     
