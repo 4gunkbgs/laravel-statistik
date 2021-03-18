@@ -64,12 +64,20 @@
 
                     </div>
                     <input type="submit" class="btn btn-primary daftar-btn" name="submit" value="Input">  {{-- tombol submit--}}
-                    
+
                     @csrf
                     
                     <label for="max" class="ml-4">Skor Maks: <b>{{ $max }}</b></label>
                     <label for="min" class="ml-4">Skor Min: <b>{{ $min }}</b></label>
                     <label for="rata2" class="ml-4">Rata-Rata: <b>{{ $rata2 }}</b></label>
+                    
+                    @if (session('status'))
+                        <p></p>
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
                 </form>
                 <br>
                 <table class="table">

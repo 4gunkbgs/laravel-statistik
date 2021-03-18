@@ -66,7 +66,7 @@ class HomeController extends Controller
         $anggota->skor = $request->skor;        
         $anggota->save();
 
-       return redirect('/');                //redirect lagi ke home
+       return redirect('/')->with('status', 'Data Berhasil Edit');                //redirect lagi ke home
    }
 
    public function store(Request $request){     //untuk nyimpen
@@ -86,7 +86,7 @@ class HomeController extends Controller
         $anggota->skor = $request->skor;
         $anggota->save();
 
-        return redirect('/');               //redirect lagi ke home
+        return redirect('/')->with('status', 'Data Berhasil Tambah');               //redirect lagi ke home
    }
 
    public function delete($id)
@@ -94,7 +94,7 @@ class HomeController extends Controller
        $anggota = Anggota::find($id);       //cari id yang dipencet
        $anggota->delete();                  //delete id tersebut
 
-       return redirect('/');                //redirect lagi ke home
+       return redirect('/')->with('status', 'Data Berhasil Dihapus');                //redirect lagi ke home
    }
 
 }
