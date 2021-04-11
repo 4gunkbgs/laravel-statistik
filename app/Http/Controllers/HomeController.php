@@ -41,7 +41,7 @@ class HomeController extends Controller
            abort(404);
        }
 
-       return view('/edit', ['anggota' => $anggota]);  //tampilkan edit.blade.php
+       return view('edit', ['anggota' => $anggota]);  //tampilkan edit.blade.php
    }
 
    public function update($id, Request $request)            

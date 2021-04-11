@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/welcome', function () {
+    return view('edit');
+});
 
 Route::get('/', 'App\Http\Controllers\HomeController@index');       //route ke index
 Route::post('/', 'App\Http\Controllers\HomeController@store');      //route ke store (bagian input)

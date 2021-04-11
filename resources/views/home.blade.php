@@ -1,115 +1,126 @@
 @extends('layout.master')
 
-@section('content')
+@section('title')
+    Statistik Deskriptif
+@endsection
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 mr-auto">
+@section('alamat')
+    Home
+@endsection
 
-                <div class="row">
-                    <div class="col-12 bg-white form-container">
-                        <h2>Tabel Frekuensi</h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <td scope="col">Skor</td>
-                                    <td scope="col">Frekuensi</td>
-                                </tr>
-                           </thead>
-                           <tbody>
-                               @foreach ($frekuensi as $skor)
-                               
-                               <tr>
-                                   <td> {{ $skor->skor }} </td>
-                                   <td> {{ $skor->frekuensi }}</td>
-                                </tr>
-                                 
-                                @endforeach
-                                <tr>
-                                    <td> <b>Total Skor:</b>  </td>
-                                    <td> {{ $totalskor }}</td>
-                                </tr>
-                                <tr>
-                                    <td> <b>Total Frekuensi:</b>  </td>
-                                    <td> {{ $totalfrekuensi }}</td>
-                                </tr>
-                           </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+@section('alamat-aktif')
+    Statistik Deskriptif
+@endsection
+    
+@section('frekuensi')
+    
+        {{-- <thead>
+            <tr>
+                <td scope="col">Skor</td>
+                <td scope="col">Frekuensi</td>
+            </tr>
+        </thead> --}}
+        <tbody>
+            @foreach ($frekuensi as $skor)
+            
+            <tr>
+                <td> {{ $skor->skor }} </td>
+                <td> {{ $skor->frekuensi }}</td>
+            </tr>
+                
+            @endforeach
+        </tbody>
+@endsection         
 
-            <div class="col-md-7 ml-auto bg-white form-container">
-                <form method="post" action="/" id="forminput">    {{-- setelah di submit, form akan mengarah ke route home--}}
-                    <h2>Silahkan Masukkan Skor</h2>
-                    <br />
-                    <div class="form-group">
-                        <label for="input1">Nama Mahasiswa</label>
-                        <input type="text" class="form-control"
-                            placeholder="Masukkan Nama Mahasiswa" name="nama" value="{{ old('nama') }}">
-
-                            @if ($errors->has('nama'))
-                                <b>{{ $errors->first('nama') }}</b>
-                            @endif
-
-                    </div>
-                    <div class="form-group">
-                        <label for="input2">Skor</label>
-                        <input type="number" class="form-control"
-                            placeholder="Masukkan Skor" name="skor" value="{{ old('skor') }}">
-
-                            @if ($errors->has('skor'))
-                                <b>{{ $errors->first('skor') }}</b>
-                            @endif
-
-                    </div>
-                    <input type="submit" class="btn btn-primary daftar-btn" name="submit" value="Input">  {{-- tombol submit--}}
-
-                    @csrf
-                    
-                    <label for="max" class="ml-4">Skor Maks: <b>{{ $max }}</b></label>
-                    <label for="min" class="ml-4">Skor Min: <b>{{ $min }}</b></label>
-                    <label for="rata2" class="ml-4">Rata-Rata: <b>{{ $rata2 }}</b></label>
-                    
-                    @if (session('status'))
-                        <p></p>
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                </form>
-                <br>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <td scope="col">No</td>
-                            <td scope="col">Nama</td>
-                            <td scope="col">Skor</td>
-                            <td scope="col">Action</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($users as $user)
-                        <tr>                             
-                            <th scope="row">{{ $loop->iteration }}</th>     
-                            <td>{{ $user->nama }}</td>
-                            <td>{{ $user->skor }}</td>
-                            <td>
-                                <form name="delete" action="/delete/{{ $user->id }}" method="POST">     {{-- setelah klik hapus, form akan mengarah ke route delete--}}
-                                    <a href='/edit/{{ $user->id }}' class="btn btn-outline-success">Edit</a> {{-- setelah klik edit, maka akan di href ke route edit/{id} (edit.blade)--}}
-                                    @csrf               {{-- csrf token untuk tombol hapus--}}
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger">Hapus</button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach                          
-                    </tbody>
-                </table>                
-            </div>
-        </div>
-    </div>
-    <!-- Akhir Container -->
+@section('statistik')
+    
+    <table class="table">            
+        <tbody>        
+            <tr>
+                <td scope="col"> <b>Total Skor:</b>  </td>                
+                <td> {{ $totalskor }}</td> 
+            </tr>
+            <tr>
+                <td scope="col"> <b>Total Frekuensi:</b>  </td>
+                <td> {{ $totalfrekuensi }}</td>  
+            </tr>           
+            <tr>
+                <td scope="col"> <b>Skor Maksimal:</b>  </td>
+                <td> {{ $max }}</td>  
+            </tr>          
+            <tr>
+                <td scope="col"> <b>Skor Minimal:</b>  </td>
+                <td> {{ $min }}</td>   
+            </tr>
+                <td scope="col"> <b>Rata-Rata:</b>  </td>         
+                <td> {{ $rata2 }}</td>
+            </tr>
+        </tbody>
+    </table>       
 
 @endsection
+
+@section('input')    
+    <form method="post" action="/" id="forminput">    {{-- setelah di submit, form akan mengarah ke route home--}}                
+        <div class="form-group">
+            <label for="input1">Nama Mahasiswa</label>
+            <input type="text" class="form-control mb-2"
+                placeholder="Masukkan Nama Mahasiswa" name="nama" value="{{ old('nama') }}">
+
+                @if ($errors->has('nama'))                    
+                    <div class="alert alert-danger">{{ $errors->first('nama') }}</div>
+                @endif
+
+        </div>
+        <div class="form-group">
+            <label for="input2">Skor</label>
+            <input type="number" class="form-control mb-2"
+                placeholder="Masukkan Skor" name="skor" value="{{ old('skor') }}">
+
+                @if ($errors->has('skor'))
+                    <div class="alert alert-danger">{{ $errors->first('skor') }}</div>
+                @endif
+
+        </div>
+        <input type="submit" class="btn btn-primary daftar-btn mt-4" name="submit" value="Input">  {{-- tombol submit--}}
+
+        @csrf
+        
+        @if (session('status'))
+            <p></p>
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
+
+    </form>
+@endsection    
+@section('data')    
+    <table class="table">
+        <thead>
+            <tr>
+                <td scope="col">No</td>
+                <td scope="col">Nama</td>
+                <td scope="col">Skor</td>
+                <td scope="col">Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
+            <tr>                             
+                <th scope="row">{{ $loop->iteration }}</th>     
+                <td>{{ $user->nama }}</td>
+                <td>{{ $user->skor }}</td>
+                <td>
+                    <form name="delete" action="/delete/{{ $user->id }}" method="POST">     {{-- setelah klik hapus, form akan mengarah ke route delete--}}
+                        <a href='/edit/{{ $user->id }}' class="btn btn-outline-success">Edit</a> {{-- setelah klik edit, maka akan di href ke route edit/{id} (edit.blade)--}}
+                        @csrf               {{-- csrf token untuk tombol hapus--}}
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach                          
+        </tbody>
+    </table>   
+@endsection                                    

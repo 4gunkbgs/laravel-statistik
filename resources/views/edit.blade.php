@@ -1,43 +1,44 @@
-@extends('layout.master')
+@extends('layout.masteredit')
 
-@section('content')
+@section('title')
+    Edit Data 
+@endsection
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8">
-                <form method="POST" action="/edit/{{ $anggota->id }}" class="bg-white form-container" id="forminput">   {{-- form akan mengarah ke route edit dengan method put --}}
-                @csrf                   {{-- csrf token untuk tombol edit --}}
-                @method('PUT')
-                    <h2>Edit Data {{ $anggota->nama }}</h2>
-                    <br />
-                    
-                    <div class="form-group">
-                        <label for="input1">Nama Mahasiswa</label>
-                        <input type="text" class="form-control" value="{{ $anggota->nama }}" id="nama"
-                            placeholder="Nama Mahasiswa" name="nama">
+@section('alamat')
+    Home
+@endsection
 
-                            @if ($errors->has('nama'))
-                                <b>{{ $errors->first('nama') }}</b>
-                            @endif
+@section('alamat-aktif')
+    Edit Data {{ $anggota->nama }}
+@endsection
 
-                    </div>  
-                    <div class="form-group">
-                        <label for="input2">Skor</label>
-                        <input type="number" class="form-control" value="{{ $anggota->skor }}" id="skor"
-                            placeholder="Skor" name="skor">
+@section('edit')                      
+    <form method="POST" action="/edit/{{ $anggota->id }} id="forminput">   {{-- form akan mengarah ke route edit dengan method put --}}
+    @csrf                   {{-- csrf token untuk tombol edit --}}
+    @method('PUT')              
+        <div class="form-group">
+            <label for="input1">Nama Mahasiswa</label>
+            <input type="text" class="form-control mb-2" value="{{ $anggota->nama }}" id="nama"
+                placeholder="Nama Mahasiswa" name="nama">
+                @if ($errors->has('nama'))
+                    <div class="alert alert-danger">{{ $errors->first('nama') }}</div>
+                @endif
+        </div>  
+        <div class="form-group">
+            <label for="input2">Skor</label>
+            <input type="number" class="form-control mb-2" value="{{ $anggota->skor }}" id="skor"
+                placeholder="Skor" name="skor">
 
-                            @if ($errors->has('skor'))
-                                <b>{{ $errors->first('skor') }}</b>
-                            @endif
-                            
-                    </div>                
-                    
-                    <input type="submit" class="btn btn-primary" name="submit" value="Edit">
-                </form>
-            </div>
+                @if ($errors->has('skor'))
+                    <div class="alert alert-danger">{{ $errors->first('skor') }}</div>
+                @endif
+                
+        </div>                
+              
+        <div class="d-flex">
+            <input type="submit" class="btn btn-primary" name="submit" value="Edit">        
+            <a href='/' class="btn btn-primary ml-auto p-2">Batal Edit</a>
         </div>
         
-        <!-- Akhir Container -->
-    </div>
-
+    </form>                                        
 @endsection
