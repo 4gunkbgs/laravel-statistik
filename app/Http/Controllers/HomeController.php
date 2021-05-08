@@ -6,31 +6,19 @@ use Illuminate\Support\Facades\DB;          //facades DB
 use Illuminate\Http\Request;
 
 use App\Models\Anggota;                     //models anggota yang ngurusin tabel user
+use App\Exports\AnggotaExport;
+use App\Imports\AnggotaImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
    public function index()
    {
-       $anggota = Anggota::all();             
-       $maxSkor = Anggota::max('skor');
-       $minSkor = Anggota::min('skor');
-       $rata2 = number_format(Anggota::average('skor'),3);
-       
-       
-       //untuk tabel frekuensi
-       $frekuensi = Anggota::select('skor', DB::raw('count(*) as frekuensi'))  //ambil skor, hitung banyak skor taruh di tabel frekuensi
-                                ->groupBy('skor')                              //urutkan sesuai skor
-                                ->get();
-       $totalskor = Anggota::sum('skor');              
-       $totalfrekuensi = Anggota::count('skor');        //karena total frekuensi = banyaknya skor yang ada
+       //tabel statistik
+       $anggota = Anggota::paginate(20);             
+                    
 
-       return view('/home', ['users' => $anggota,
-                            'max' => $maxSkor, 
-                            'min' => $minSkor, 
-                            'rata2' => $rata2,
-                            'frekuensi' => $frekuensi,
-                            'totalskor' => $totalskor,
-                            'totalfrekuensi' => $totalfrekuensi]);    //tampilkan home.blade
+       return view('/home', ['users' => $anggota]);    //tampilkan home.blade
    }
 
    public function edit($id)
@@ -53,8 +41,7 @@ class HomeController extends Controller
        }
 
        $this->validate($request, 
-        [
-            'nama'      =>  'required|max:30',
+        [         
             'skor'      =>  'required|numeric|min:0|max:100'
         ],
         [
@@ -62,7 +49,6 @@ class HomeController extends Controller
             'skor.max'  =>  'Kolom Skor Hanya Bisa Diisi Angka 0-100'
         ]);
 
-        $anggota->nama = $request->nama;    //tumpuk atribut tabel dengan yang diinput user
         $anggota->skor = $request->skor;        
         $anggota->save();
 
@@ -72,17 +58,16 @@ class HomeController extends Controller
    public function store(Request $request){     //untuk nyimpen
        
         $this->validate($request, 
-        [
-            'nama'      =>  'required|max:30',
-            'skor'      =>  'required|numeric|min:0|max:100'
+        [            
+            'skor'      =>  'required|numeric|min:1|max:100'
         ],
         [
-            'skor.min'  =>  'Kolom Skor Hanya Bisa Diisi Angka 0-100',
-            'skor.max'  =>  'Kolom Skor Hanya Bisa Diisi Angka 0-100'
+            'skor.min'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'skor.max'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'skor.numeric' => 'Kolom Hanya Bisa Berisi Angka!'
         ]);
         
-        $anggota = new Anggota;                 //buat objek baru
-        $anggota->nama = $request->nama;        //simpen apa yang diinput user ke atribut tabel
+        $anggota = new Anggota;                 //buat objek baru        
         $anggota->skor = $request->skor;
         $anggota->save();
 
@@ -97,4 +82,111 @@ class HomeController extends Controller
        return redirect('/')->with('status', 'Data Berhasil Dihapus');                //redirect lagi ke home
    }
 
+//    public function deleteAll()
+//    {
+//        $anggota = Anggota::all();           //cari id yang dipencet
+//        $anggota->truncate();      
+
+//        return redirect('/')->with('status', 'Data Berhasil Dihapus SEMUA');
+//    }
+
+    public function export(){
+
+        return Excel::download(new AnggotaExport, time().'_'.'mahasiswa.xlsx');               
+   }
+
+   public function import(Request $request){
+
+        $this->validate($request, 
+        [            
+            'file'      =>  'required|file|mimes:xlsx'
+        ],
+        [
+            'file'      =>  'File Harus Berekstensi .xlsx',            
+        ]);   
+
+        $file = $request->file('file');       
+        $namaFile = $file->getClientOriginalName();
+        $file->move('Skor', $namaFile);
+        
+        $filexcel = Excel::import(new AnggotaImport, public_path('/Skor/'.$namaFile));               
+        // try{
+        // } catch (\Exception $ex){
+        //     return back()->withErrors('HELO PEK');
+        // }
+        
+        return redirect('/')->with('status', 'Data Berhasil Diimport!');
+   }
+
+   public function frekuensi(){                         
+              
+        //untuk tabel frekuensi
+        $frekuensi = Anggota::select('skor', DB::raw('count(*) as frekuensi'))  //ambil skor, hitung banyak skor taruh di tabel frekuensi
+                                    ->groupBy('skor')                              //urutkan sesuai skor
+                                    ->get();             
+        $totalfrekuensi = Anggota::count('skor'); 
+
+         return view('frekuensi', ['frekuensi' => $frekuensi,
+                                'totalfrekuensi' => $totalfrekuensi]);    //tampilkan frekuensi.blade
+   }
+
+   public function statistik(){
+
+       $maxSkor = Anggota::max('skor');
+       $minSkor = Anggota::min('skor');
+       $rata2 = number_format(Anggota::average('skor'), 2) ;
+       $totalskor = Anggota::sum('skor'); 
+       
+       return view ('statistik', ['max' => $maxSkor, 
+                                'min' => $minSkor, 
+                                'rata2' => $rata2,
+                                'totalskor' => $totalskor]);
+   }
+
+   public function databergolong(){
+
+        $maxSkor = Anggota::max('skor');
+        $minSkor = Anggota::min('skor');
+        $n = Anggota::count('skor');
+        //mencari rentangan
+        $rentangan = $maxSkor - $minSkor;
+
+        //mencari kelas        
+        $kelas = ceil(1 + 3.3 * log10 ($n));
+
+        //menghitung interval
+        $interval = ceil($rentangan/$kelas);        
+        
+        //set batas bawah dan batas atas
+        $batasBawah = $minSkor;
+        $batasAtas = 0;
+        
+        //data bergolong
+        for($i = 0; $i < $kelas; $i++){
+            $batasAtas = $batasBawah + $interval - 1;
+            // $frekuensi[$i] = Anggota::where(function, $query){
+            //     $query->select(DB::raw('SUM(frekuensi) as tabel1'))
+            //             ->
+            // }          
+            $frekuensi[$i] = Anggota::select(DB::raw('count(*) as frekuensi, skor'))
+                                    ->where([
+                                        ['skor', '>=', $batasBawah],
+                                        ['skor', '<=', $batasAtas],
+                                    ])
+                                    ->groupBy()                                                                                                    
+                                    ->count();            
+            $data[$i] = $batasBawah. " - ". $batasAtas;                                                          
+            $batasBawah = $batasAtas + 1;
+        }
+                
+
+        return view ('databergolong', ['data' => $data,
+                                        'frekuensi' => $frekuensi,
+                                        'batasAtas' => $batasAtas,
+                                        'batasBawah' => $batasBawah,
+                                        'kelas' => $kelas,
+                                        'interval' => $interval,
+                                        'rentangan' => $rentangan,                                        
+                                        ]);
+   }
 }

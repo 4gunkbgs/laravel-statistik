@@ -20,7 +20,17 @@ Route::get('/welcome', function () {
 Route::get('/', 'App\Http\Controllers\HomeController@index');       //route ke index
 Route::post('/', 'App\Http\Controllers\HomeController@store');      //route ke store (bagian input)
 
+
 Route::get('/edit/{id}', 'App\Http\Controllers\HomeController@edit');   //route ke edit (bagian edit.blade)
 Route::put('/edit/{id}', 'App\Http\Controllers\HomeController@update'); //route ke update (setelah klik edit pada edit.blade)
 
-Route::delete('/delete/{id}', 'App\Http\Controllers\HomeController@delete');    //route ke delete (klik delete)
+Route::delete('/delete/{id}', 'App\Http\Controllers\HomeController@delete');
+// Route::delete('/delete', 'App\Http\Controllers\HomeController@deleteAll');     //route ke delete (klik delete)
+
+Route::get('/export', 'App\Http\Controllers\HomeController@export');       //route ke export
+Route::post('/import', 'App\Http\Controllers\HomeController@import');       //route ke export
+
+Route::get('/frekuensi', 'App\Http\Controllers\HomeController@frekuensi');
+Route::get('/statistik', 'App\Http\Controllers\HomeController@statistik');
+
+Route::get('/databergolong', 'App\Http\Controllers\HomeController@databergolong');

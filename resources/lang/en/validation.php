@@ -82,7 +82,7 @@ return [
         'string' => 'Kolom :attribute tidak boleh lebih dari :max karakter.',
         'array' => 'The :attribute may not have more than :max items.',
     ],
-    'mimes' => 'The :attribute must be a file of type: :values.',
+    'mimes' => ':attribute harus memiliki tipe data: :values.',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
         'numeric' => 'Kolom :attribute harus bernilai minimal :min.',
