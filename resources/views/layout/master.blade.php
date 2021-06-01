@@ -83,7 +83,17 @@
                     <a href="/databergolong" class="nav-link text-white bg-secondary mt-3">
                       <p> Data Bergolong </p>
                     </a>                                    
+                  </li>
+                  <li class="nav-item">
+                    <a href="/chikuadrat" class="nav-link text-white bg-secondary mt-3">
+                      <p> Normalisasi Chi-Kuadrat </p>
+                    </a>                                    
                   </li>                    
+                  <li class="nav-item">
+                    <a href="#" class="nav-link text-white bg-secondary mt-3">
+                      <p> Normalisasi Liliefors </p>
+                    </a>                                    
+                  </li> 
                   <li class="nav-item">
                     <a href="/export" class="nav-link bg-danger mt-5">
                       <p>Export</p>

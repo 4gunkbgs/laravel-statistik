@@ -34,3 +34,4 @@ Route::get('/frekuensi', 'App\Http\Controllers\HomeController@frekuensi');
 Route::get('/statistik', 'App\Http\Controllers\HomeController@statistik');
 
 Route::get('/databergolong', 'App\Http\Controllers\HomeController@databergolong');
+Route::get('/chikuadrat', 'App\Http\Controllers\HomeController@chikuadrat');

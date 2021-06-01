@@ -25,7 +25,8 @@
                         <tr>
                             <th>No</th>
                             <th>Rentangan</th>
-                            <th>Frekuensi</th>                                                                                                  
+                            <th>Frekuensi</th>                           
+
                         </tr>                        
                     </thead>            
                     <tbody>
