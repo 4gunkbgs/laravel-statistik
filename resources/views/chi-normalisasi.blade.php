@@ -55,7 +55,18 @@
                         
                         @endfor     
                         <tr>        
-                            <td> Total Chi: {{ $totalchi }}</td>
+                            <th> Total: </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>                            
+                            <th>{{ $totalchi }}</th>
                         </tr>                                        
                     </tbody>
                 </table>                                                               
