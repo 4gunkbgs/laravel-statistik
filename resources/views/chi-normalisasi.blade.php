@@ -53,9 +53,10 @@
                             <td> {{ $kai[$i] }}</td>                    
                         </tr>                                                                                                                                                                                                                                                                                                 
                         
-                        @endfor                             
+                        @endfor     
+                        <tr>        
                             <td> Total Chi: {{ $totalchi }}</td>
-                                                               
+                        </tr>                                        
                     </tbody>
                 </table>                                                               
             </div>

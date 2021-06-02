@@ -35,3 +35,4 @@ Route::get('/statistik', 'App\Http\Controllers\HomeController@statistik');
 
 Route::get('/databergolong', 'App\Http\Controllers\HomeController@databergolong');
 Route::get('/chikuadrat', 'App\Http\Controllers\HomeController@chikuadrat');
+Route::get('/lillifors', 'App\Http\Controllers\HomeController@lilliefors');

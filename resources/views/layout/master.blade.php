@@ -90,7 +90,7 @@
                     </a>                                    
                   </li>                    
                   <li class="nav-item">
-                    <a href="#" class="nav-link text-white bg-secondary mt-3">
+                    <a href="/lillifors" class="nav-link text-white bg-secondary mt-3">
                       <p> Normalisasi Liliefors </p>
                     </a>                                    
                   </li> 
