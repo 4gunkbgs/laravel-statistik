@@ -127,7 +127,7 @@
               <div class="modal-body">                                                                                     
                 <div class="form-group">                                
                   <input type="file" name="file" required>
-                  <p class="mt-1"> <i>File yang disupport: .xlxs</i> </p> 
+                  <p class="mt-1"> <i>File yang disupport: .xlxs dan .csv</i> </p> 
                 </div>    
                 
                 <div class="modal-footer">

@@ -12,16 +12,16 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class AnggotaImport implements ToModel
 {    
-    use Importable;
+    use importable;
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
     public function model(array $row)
-    {        
+    {                            
         return new Anggota([           
-            'skor' => $row[0],               
+            'skor' => $row[0],                                               
         ]);
     }
 

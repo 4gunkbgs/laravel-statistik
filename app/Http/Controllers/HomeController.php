@@ -100,17 +100,18 @@ class HomeController extends Controller
 
         $this->validate($request, 
         [            
-            'file'      =>  'required|file|mimes:xlsx'
+            'file'      =>  'required|file|mimes:xlsx,csv'
         ],
         [
-            'file'      =>  'File Harus Berekstensi .xlsx',            
+            'file'      =>  'File Harus Berekstensi .xlsx atau .csv',            
         ]);   
 
         $file = $request->file('file');       
         $namaFile = $file->getClientOriginalName();
         $file->move('Skor', $namaFile);
         
-        $filexcel = Excel::import(new AnggotaImport, public_path('/Skor/'.$namaFile));               
+        $filexcel = Excel::import(new AnggotaImport, public_path('/Skor/'.$namaFile));                  
+       
         // try{
         // } catch (\Exception $ex){
         //     return back()->withErrors('HELO PEK');
