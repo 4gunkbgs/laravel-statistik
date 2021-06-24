@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <!-- saved from url=(0041)https://adminlte.io/themes/v3/index3.html -->
-<html lang="en" style="height: auto;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
+<html lang="en" style="height: auto;">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title')</title>
 
@@ -20,8 +21,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
   <!-- CSS -->
   <link rel="stylesheet" href="{{ asset('/css/master.css') }}">
-<style type="text/css">/* Chart.js */
-@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}</style></head>
+  <style type="text/css">/* Chart.js */
+@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}
+  </style>
+</head>
 <!--
 `body` tag options:
 
@@ -93,17 +96,17 @@
                     <a href="/lillifors" class="nav-link text-white bg-secondary mt-3">
                       <p> Normalisasi Liliefors </p>
                     </a>                                    
-                  </li> 
-                  <li class="nav-item">
-                    <a href="/export" class="nav-link bg-danger mt-5">
-                      <p>Export</p>
-                    </a>                                    
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link bg-success mt-3" data-toggle="modal" data-target="#exampleModal">
-                      <p>Import</p>
-                    </a>                                                        
-                  </li>                  
+                    <a href="/korelasiMoment" class="nav-link text-white bg-secondary mt-3">
+                      <p> Koefisien Korelasi Product Moment </p>
+                    </a>                                    
+                  </li> 
+                  <li class="nav-item">
+                    <a href="/korelasiBiserial" class="nav-link text-white bg-secondary mt-3">
+                      <p> Koefisien Korelasi Product Biserial </p>
+                    </a>                                    
+                  </li>                                      
                 </ul>
               </li>                   
             </ul>
@@ -111,36 +114,7 @@
           <!-- /.sidebar-menu -->
         </div>
         <!-- /.sidebar -->
-      </aside>
-
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Import File</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form action="/import" method="POST" enctype="multipart/form-data">                                    
-              <div class="modal-body">                                                                                     
-                <div class="form-group">                                
-                  <input type="file" name="file" required>
-                  <p class="mt-1"> <i>File yang disupport: .xlxs dan .csv</i> </p> 
-                </div>    
-                
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                  <button type="submit" class="btn btn-primary">Import</button>
-                  @csrf 
-                  
-                </div>  
-              </div>
-            </form>                                        
-          </div>
-        </div>
-      </div>
+      </aside>      
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper" style="min-height: 1299.69px;">

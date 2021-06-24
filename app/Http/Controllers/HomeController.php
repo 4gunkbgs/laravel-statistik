@@ -7,8 +7,13 @@ use Illuminate\Http\Request;
 
 use App\Models\Anggota;                     //models anggota yang ngurusin tabel user
 use App\Models\ZTabel;
+use App\Models\Moment;
+use App\Models\Biserial;
 use App\Exports\AnggotaExport;
+use App\Exports\MomentExport;
+use App\Exports\BiserialExport;
 use App\Imports\AnggotaImport;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
@@ -94,7 +99,7 @@ class HomeController extends Controller
     public function export(){
 
         return Excel::download(new AnggotaExport, time().'_'.'mahasiswa.xlsx');               
-   }
+    }
 
    public function import(Request $request){
 
@@ -500,5 +505,29 @@ class HomeController extends Controller
                                     'n' => $n,
                                  ]);
    }
+
+   public function korelasiMoment(){
+       $moments = Moment::all();
+       return view('/korelasimoment', ['moments' => $moments,
+
+                                    ]);
+   }
+
+    public function exportmoment(){
+
+        return Excel::download(new MomentExport, time().'_'.'korpointmoment.xlsx');               
+    }
+
+   public function korelasiBiserial(){
+        $biserials = Biserial::all();
+        return view('/korelasibiserial', ['biserials' => $biserials,
+
+                                    ]);
+   }
+
+   public function exportbiserial(){
+
+        return Excel::download(new BiserialExport, time().'_'.'korpointbiserial.xlsx');               
+    }
 
 }
