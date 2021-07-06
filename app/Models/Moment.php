@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Moment extends Model
 {
     protected $table = 'table_kor_point_moment';
+    protected $fillable = ['x', 'y'];
+    public $timestamps = false;   
     use HasFactory;
 }

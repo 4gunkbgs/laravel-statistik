@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Biserial extends Model
 {
     protected $table = 'table_biserial';
+    protected $fillable = ['kecerdasan', 'keaktifan'];
+    public $timestamps = false;    
     use HasFactory;
 }

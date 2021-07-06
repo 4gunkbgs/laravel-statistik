@@ -13,6 +13,8 @@ use App\Exports\AnggotaExport;
 use App\Exports\MomentExport;
 use App\Exports\BiserialExport;
 use App\Imports\AnggotaImport;
+use App\Imports\MomentImport;
+use App\Imports\BiserialImport;
 
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -506,28 +508,66 @@ class HomeController extends Controller
                                  ]);
    }
 
-   public function korelasiMoment(){
+     public function korelasiMoment(){
        $moments = Moment::all();
        return view('/korelasimoment', ['moments' => $moments,
 
                                     ]);
-   }
+    }
 
     public function exportmoment(){
 
         return Excel::download(new MomentExport, time().'_'.'korpointmoment.xlsx');               
     }
 
-   public function korelasiBiserial(){
+    public function importmoment(Request $request){
+
+        $this->validate($request, 
+        [            
+            'file'      =>  'required|file|mimes:xlsx,csv'
+        ],
+        [
+            'file'      =>  'File Harus Berekstensi .xlsx atau .csv',            
+        ]);          
+
+        $file = $request->file('file');       
+        $namaFile = $file->getClientOriginalName();
+        $file->move('Moment', $namaFile);
+        
+        $filexcel = Excel::import(new MomentImport, public_path('/Moment/'.$namaFile));                         
+        
+        return redirect('/')->with('status', 'Data Korelasi Moment Berhasil Diimport!');
+   }
+
+    public function korelasiBiserial(){
         $biserials = Biserial::all();
         return view('/korelasibiserial', ['biserials' => $biserials,
 
                                     ]);
-   }
+    }
 
-   public function exportbiserial(){
+    public function exportbiserial(){
 
         return Excel::download(new BiserialExport, time().'_'.'korpointbiserial.xlsx');               
     }
+
+    public function importbiserial(Request $request){
+
+        $this->validate($request, 
+        [            
+            'file'      =>  'required|file|mimes:xlsx,csv'
+        ],
+        [
+            'file'      =>  'File Harus Berekstensi .xlsx atau .csv',            
+        ]);          
+
+        $file = $request->file('file');       
+        $namaFile = $file->getClientOriginalName();
+        $file->move('Biserial', $namaFile);
+        
+        $filexcel = Excel::import(new BiserialImport, public_path('/Biserial/'.$namaFile));                         
+        
+        return redirect('/')->with('status', 'Data Korelasi Biserial Berhasil Diimport!');
+   }
 
 }
