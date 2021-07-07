@@ -45,3 +45,7 @@ Route::get('/lillifors', 'App\Http\Controllers\HomeController@lilliefors');
 
 Route::get('/korelasiMoment', 'App\Http\Controllers\HomeController@korelasiMoment');
 Route::get('/korelasiBiserial', 'App\Http\Controllers\HomeController@korelasiBiserial');
+
+Route::get('/ujiTBerkolerasi', 'App\Http\Controllers\HomeController@ujiTBerkolerasi');
+
+Route::post('/ujiTBerkolerasiImport', 'App\Http\Controllers\HomeController@ujiTBerkolerasiImport');

@@ -106,7 +106,12 @@
                     <a href="/korelasiBiserial" class="nav-link text-white bg-secondary mt-3">
                       <p> Koefisien Korelasi Product Biserial </p>
                     </a>                                    
-                  </li>                                      
+                  </li>
+                  <li class="nav-item">
+                    <a href="/ujiTBerkolerasi" class="nav-link text-white bg-secondary mt-3">
+                      <p>Uji T Berkolerasi</p>
+                    </a>                                    
+                  </li>                                       
                 </ul>
               </li>                   
             </ul>

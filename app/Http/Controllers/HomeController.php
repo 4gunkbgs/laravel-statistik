@@ -508,10 +508,20 @@ class HomeController extends Controller
                                  ]);
    }
 
-     public function korelasiMoment(){
-       $moments = Moment::all();
-       return view('/korelasimoment', ['moments' => $moments,
+    public function korelasiMoment(){
+       $moments = Moment::all(); 
+       $jumlahXY = Moment::count();       
+       $jumlahX = Moment::count('x');   
+       $jumlahY = Moment::count('y');
 
+       for ($i=0; $i < $jumlahX; $i++) { 
+           $xKuadrat[$i] = $moments[$i]->x * $moments[$i]->x;          
+           $yKuadrat[$i] = $moments[$i]->y * $moments[$i]->y;   
+       }
+       return view('/korelasimoment', ['moments' => $moments,
+                                        'jumlahXY' => $jumlahXY,
+                                        'xKuadrat' => $xKuadrat,
+                                        'yKuadrat' => $yKuadrat,
                                     ]);
     }
 
@@ -568,6 +578,15 @@ class HomeController extends Controller
         $filexcel = Excel::import(new BiserialImport, public_path('/Biserial/'.$namaFile));                         
         
         return redirect('/')->with('status', 'Data Korelasi Biserial Berhasil Diimport!');
-   }
+    }
+
+    public function ujiTBerkolerasi(){
+
+        $t = 30;
+
+        return view('/ujiTBerkolerasi', ['ujiT' => $t,
+
+                                    ]);
+    }
 
 }
