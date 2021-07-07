@@ -510,18 +510,52 @@ class HomeController extends Controller
 
     public function korelasiMoment(){
        $moments = Moment::all(); 
-       $jumlahXY = Moment::count();       
+       $jumlahData = Moment::count();       
        $jumlahX = Moment::count('x');   
        $jumlahY = Moment::count('y');
 
-       for ($i=0; $i < $jumlahX; $i++) { 
-           $xKuadrat[$i] = $moments[$i]->x * $moments[$i]->x;          
-           $yKuadrat[$i] = $moments[$i]->y * $moments[$i]->y;   
-       }
+       $rata2X = Moment::average('x');
+       $rata2Y = Moment::average('y');
+
+       $sumX = Moment::sum('x');
+       $sumY = Moment::sum('y');       
+
+       $sumXKuadrat = 0;
+       $sumYKuadrat = 0;
+       $sumXY = 0;
+       for ($i=0; $i < $jumlahX; $i++) {
+
+            $xKecil[$i] = $moments[$i]->x - $rata2X;
+            $yKecil[$i] = $moments[$i]->y - $rata2Y;
+           $xKuadrat[$i] = $xKecil[$i] * $xKecil[$i];             
+           $sumXKuadrat += $xKuadrat[$i];           
+
+           $yKuadrat[$i] = $yKecil[$i] * $yKecil[$i];   
+           $sumYKuadrat += $yKuadrat[$i];
+
+           $xKaliY[$i] = $xKecil[$i] * $yKecil[$i];                       
+           $sumXY += $xKaliY[$i];
+       }       
+
+       //rumus
+    //    $korelasimoment = $jumlahData*$sumXY - ($sumX)*($sumY)/sqrt(($jumlahData * $sumXKuadrat - pow($sumX, 2)) *($jumlahData*$sumYKuadrat - pow($sumY, 2)));       
+       $korelasimoment = $sumXY/sqrt($sumXKuadrat*$sumYKuadrat);       
+
        return view('/korelasimoment', ['moments' => $moments,
-                                        'jumlahXY' => $jumlahXY,
+                                        'jumlahData' => $jumlahData,
                                         'xKuadrat' => $xKuadrat,
                                         'yKuadrat' => $yKuadrat,
+                                        'xKecil' => $xKecil,
+                                        'yKecil' => $yKecil,
+                                        'xKaliY' => $xKaliY,
+                                        'sumX' => $sumX,
+                                        'sumY' => $sumY,
+                                        'sumXKuadrat' => $sumXKuadrat,
+                                        'sumYKuadrat' => $sumYKuadrat,
+                                        'sumXY' => $sumXY,
+                                        'korelasimoment' => $korelasimoment,
+                                        'rata2X' => $rata2X,
+                                        'rata2Y' => $rata2Y,
                                     ]);
     }
 

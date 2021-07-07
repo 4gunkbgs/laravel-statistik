@@ -72,28 +72,46 @@
                             <th>y</th>
                             <th>x^2</th> 
                             <th>y^2</th>
-                            <th>xy</th>  
-                            <th>Nilai Korelasi Point Moment</th>
+                            <th>xy</th>                              
                         </tr>                        
                     </thead>            
                     <tbody> 
-                        @for ($i = 0; $i < $jumlahXY; $i++)                       
+                        @for ($i = 0; $i < $jumlahData; $i++)                       
                         <tr>      
                             
                                 
                             <th>{{ $i+1 }}</th>                                                                                         
                             <td>{{ $moments[$i]->x}}</td>
                             <td>{{ $moments[$i]->y}}</td>                                         
-                            <td></td>                                         
-                            <td></td>                                         
+                            <td>{{ $xKecil[$i] }}</td>                                         
+                            <td>{{ $yKecil[$i] }}</td>                                         
                             <td>{{ $xKuadrat[$i] }}</td>                                         
                             <td>{{ $yKuadrat[$i] }}</td>                                         
-                            <td></td>  
-                            <td></td>       
+                            <td>{{ $xKaliY[$i] }}</td>                                   
                         </tr>                                                       
                         @endfor
-                    </tbody>
-                </table>                                                               
+                        <tr>
+                            <th> Jumlah: </th>
+                            <th> {{ $sumX }}</th>
+                            <th> {{ $sumY}} </th>
+                            <th></th>
+                            <th></th>
+                            <th> {{ $sumXKuadrat }}</th>
+                            <th> {{ $sumYKuadrat }}</th>
+                            <th> {{ $sumXY }}</th>
+                        </tr> 
+                        <tr>
+                            <th>Rata-Rata: </th>    
+                            <th> {{ number_format($rata2X,2) }}</th>
+                            <th> {{ number_format($rata2Y,2) }}</th>
+                        </tr>                       
+                    </tbody>                    
+                </table>                     
+                <table class="table text-left">
+                    <tr>
+                        <td> <b> Nilai Korelasi Point Moment : </b> &nbsp {{ $korelasimoment }} </td>     
+                    </tr>    
+                </table>                                                     
             </div>
         </div>
     </div>
