@@ -62,32 +62,37 @@
                         <tr>
                             <th>No</th>
                             <th>X1</th>
-                            <th>X2</th>
-                            <th>Nilai Uji T Berkolerasi</th>                                                                               
+                            <th>X2</th>                                                                                                          
                         </tr>                        
                     </thead>            
                     <tbody>
+                        @foreach ($ujiT as $t)
+                            
                         <tr>
-                            <td>1</td>
-                            <td>{{ $ujiT }}</td>                                         
-                            <td>10</td>  
-                            <td>ini hasil uji t</td>                                                                                                            
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $t->x1 }}</td>                                         
+                            <td>{{ $t->x2 }}</td>                                                                                                                                          
                         </tr>   
+                        @endforeach
                         <tr>
                             <th>Rata-Rata: </th>   
-                            <td>Rata2 sampel 1</td>        
-                            <td>Rata2 sampel 2</td>                                                
+                            <td>{{ number_format($rata2x1, 2) }}</td>        
+                            <td>{{ number_format($rata2x2, 2) }}</td>                                                
                         </tr>             
                         <tr>
                             <th>Varians:</th>
-                            <td>Varians sampel 1</td>
-                            <td>Varians sampel 2</td>
+                            <td>{{ number_format($variansX1, 2) }}</td>
+                            <td>{{ number_format($variansX2, 2) }}</td>
                         </tr>
                         <tr>
-                            <th>Simpangan Baku:</th>  
-                            <td>Simpangan baku smapel 1</td>   
-                            <td>Simpangan baku sampel 2</td>
-                        </tr>       
+                            <th>Standar Deviasi:</th>  
+                            <td>{{ $sdX1 }}</td>   
+                            <td>{{ $sdX2 }}</td>
+                        </tr> 
+                        <tr>
+                            <th>Nilai Uji T: </th>    
+                            <td> {{ $nilaiUjiT }}</td>
+                        </tr>      
                     </tbody>
                 </table>                                                               
             </div>

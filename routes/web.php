@@ -47,5 +47,4 @@ Route::get('/korelasiMoment', 'App\Http\Controllers\HomeController@korelasiMomen
 Route::get('/korelasiBiserial', 'App\Http\Controllers\HomeController@korelasiBiserial');
 
 Route::get('/ujiTBerkolerasi', 'App\Http\Controllers\HomeController@ujiTBerkolerasi');
-
 Route::post('/ujiTBerkolerasiImport', 'App\Http\Controllers\HomeController@ujiTBerkolerasiImport');
