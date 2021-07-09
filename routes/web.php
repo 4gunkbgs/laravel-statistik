@@ -19,13 +19,14 @@ Route::get('/welcome', function () {
 
 Route::get('/', 'App\Http\Controllers\HomeController@index');       //route ke index
 Route::post('/', 'App\Http\Controllers\HomeController@store');      //route ke store (bagian input)
+Route::post('/ujiTBerkolerasi', 'App\Http\Controllers\HomeController@storeX1X2');
 
 
 Route::get('/edit/{id}', 'App\Http\Controllers\HomeController@edit');   //route ke edit (bagian edit.blade)
 Route::put('/edit/{id}', 'App\Http\Controllers\HomeController@update'); //route ke update (setelah klik edit pada edit.blade)
 
 Route::delete('/delete/{id}', 'App\Http\Controllers\HomeController@delete');
-// Route::delete('/delete', 'App\Http\Controllers\HomeController@deleteAll');     //route ke delete (klik delete)
+Route::delete('/hapus/{id}', 'App\Http\Controllers\HomeController@deleteT');
 
 Route::get('/export', 'App\Http\Controllers\HomeController@export');       //route ke export
 Route::post('/import', 'App\Http\Controllers\HomeController@import');       //route ke export
@@ -47,4 +48,5 @@ Route::get('/korelasiMoment', 'App\Http\Controllers\HomeController@korelasiMomen
 Route::get('/korelasiBiserial', 'App\Http\Controllers\HomeController@korelasiBiserial');
 
 Route::get('/ujiTBerkolerasi', 'App\Http\Controllers\HomeController@ujiTBerkolerasi');
+Route::get('/exportujiT', 'App\Http\Controllers\HomeController@ujiTBerkolerasiExport');
 Route::post('/ujiTBerkolerasiImport', 'App\Http\Controllers\HomeController@ujiTBerkolerasiImport');

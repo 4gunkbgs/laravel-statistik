@@ -13,6 +13,7 @@ use App\Models\UjiT;
 use App\Exports\AnggotaExport;
 use App\Exports\MomentExport;
 use App\Exports\BiserialExport;
+use App\Exports\UjiTExport;
 use App\Imports\AnggotaImport;
 use App\Imports\MomentImport;
 use App\Imports\BiserialImport;
@@ -64,7 +65,7 @@ class HomeController extends Controller
        return redirect('/')->with('status', 'Data Berhasil Edit');                //redirect lagi ke home
    }
 
-   public function store(Request $request){     //untuk nyimpen
+   public function store(Request $request){     //untuk nyimpen    
        
         $this->validate($request, 
         [            
@@ -77,10 +78,35 @@ class HomeController extends Controller
         ]);
         
         $anggota = new Anggota;                 //buat objek baru        
-        $anggota->skor = $request->skor;
+        $anggota->skor = $request->skor;        
         $anggota->save();
 
         return redirect('/')->with('status', 'Data Berhasil Tambah');               //redirect lagi ke home
+   }
+
+   public function storeX1X2(Request $request){       
+
+        $this->validate($request, 
+        [            
+            'x1'      =>  'required|numeric|min:1|max:100',
+            'x2'      =>  'required|numeric|min:1|max:100'
+        ],
+        [
+            'x1.min'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x1.max'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x1.numeric' => 'Kolom Hanya Bisa Berisi Angka!',
+            'x2.min'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x2.max'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x2.numeric' => 'Kolom Hanya Bisa Berisi Angka!'
+        ]);
+
+        $ujiT = new UjiT;
+        $ujiT->x1 = $request->x1;
+        $ujiT->x2 = $request->x2;
+        $ujiT->save();
+
+        return redirect('/ujiTBerkolerasi')->with('status', 'Data Berhasil Tambah');
+
    }
 
    public function delete($id)
@@ -89,6 +115,14 @@ class HomeController extends Controller
        $anggota->delete();                  //delete id tersebut
 
        return redirect('/')->with('status', 'Data Berhasil Dihapus');                //redirect lagi ke home
+   }
+
+   public function deleteT($id)
+   {
+       $ujiT = UjiT::find($id);         //cari id yang dipencet       
+       $ujiT->delete();                  //delete id tersebut
+
+       return redirect('/ujiTBerkolerasi')->with('status', 'Data Berhasil Dihapus');                //redirect lagi ke home
    }
 
 //    public function deleteAll()
@@ -680,13 +714,15 @@ class HomeController extends Controller
             $sumX1X2 += $x1Kalix2[$i];
         }       
 
-       //rumus korelasi    
-       $korelasimoment = number_format($sumX1X2/sqrt($sumX1Kuadrat*$sumX2Kuadrat), 2);       
+       //rumus korelasi   
+        //dd(number_format($sumX1Kuadrat*$sumX2Kuadrat, 6)); 
+       $korelasimoment = number_format($sumX1X2/sqrt($sumX1Kuadrat*$sumX2Kuadrat), 2);  
+       
        
 
         //nilaiUjiT
        $nilaiUjiT = number_format($rata2x1 - $rata2x2 / sqrt( ( ($variansX1/$n1)+($variansX2/$n2)) - 2*$korelasimoment*( ($sdX1/sqrt($n1)) * ($sdX2/sqrt($n2)) ) ), 2 );       
-
+       
         return view('/ujiTBerkolerasi', ['ujiT' => $ujiT,
                                         'rata2x1' => $rata2x1,
                                         'rata2x2' => $rata2x2,
@@ -698,8 +734,12 @@ class HomeController extends Controller
                                     ]);
     }
 
+    public function ujiTBerkolerasiExport(){
+
+        return Excel::download(new UjiTExport, time().'_'.'DataUjiT.xlsx'); 
+    }
+
     public function ujiTBerkolerasiImport(){
         $s = 0;
     }
-
 }
