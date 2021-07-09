@@ -10,13 +10,19 @@ use App\Models\ZTabel;
 use App\Models\Moment;
 use App\Models\Biserial;
 use App\Models\UjiT;
+use App\Models\UjiAnava;
+
 use App\Exports\AnggotaExport;
 use App\Exports\MomentExport;
 use App\Exports\BiserialExport;
 use App\Exports\UjiTExport;
+use App\Exports\UjiAnavaExport;
+
 use App\Imports\AnggotaImport;
 use App\Imports\MomentImport;
 use App\Imports\BiserialImport;
+use App\Imports\UjiTImport;
+use App\Imports\UjiAnavaImport;
 
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -123,6 +129,14 @@ class HomeController extends Controller
        $ujiT->delete();                  //delete id tersebut
 
        return redirect('/ujiTBerkolerasi')->with('status', 'Data Berhasil Dihapus');                //redirect lagi ke home
+   }
+
+   public function deleteAnava($id)
+   {
+       $ujiT = UjiAnava::find($id);         //cari id yang dipencet       
+       $ujiT->delete();                  //delete id tersebut
+
+       return redirect('/ujiAnava')->with('status', 'Data Berhasil Dihapus');                //redirect lagi ke home
    }
 
 //    public function deleteAll()
@@ -383,9 +397,7 @@ class HomeController extends Controller
             //menghitung (f0-fe)^2/fe
             $kai[$i] = number_format(pow(($frekuensi[$i] - $fe[$i]),2)/$fe[$i], 7);
             $totalchi += $kai[$i];                        
-        }
-       
-                
+        }                       
 
         return view ('chi-normalisasi', ['data' => $data,
                                         'frekuensi' => $frekuensi,
@@ -562,8 +574,8 @@ class HomeController extends Controller
 
             $xKecil[$i] = $moments[$i]->x - $rata2X;
             $yKecil[$i] = $moments[$i]->y - $rata2Y;
-           $xKuadrat[$i] = $xKecil[$i] * $xKecil[$i];             
-           $sumXKuadrat += $xKuadrat[$i];           
+            $xKuadrat[$i] = $xKecil[$i] * $xKecil[$i];             
+            $sumXKuadrat += $xKuadrat[$i];           
 
            $yKuadrat[$i] = $yKecil[$i] * $yKecil[$i];   
            $sumYKuadrat += $yKuadrat[$i];
@@ -739,7 +751,94 @@ class HomeController extends Controller
         return Excel::download(new UjiTExport, time().'_'.'DataUjiT.xlsx'); 
     }
 
-    public function ujiTBerkolerasiImport(){
-        $s = 0;
+    public function ujiTBerkolerasiImport(Request $request){
+
+        $this->validate($request, 
+        [            
+            'file'      =>  'required|file|mimes:xlsx,csv'
+        ],
+        [
+            'file'      =>  'File Harus Berekstensi .xlsx atau .csv',            
+        ]);          
+
+        $file = $request->file('file');       
+        $namaFile = $file->getClientOriginalName();
+        $file->move('UjiT', $namaFile);
+        
+        $filexcel = Excel::import(new UjiTImport, public_path('/UjiT/'.$namaFile));                         
+        
+        return redirect('/ujiTBerkolerasi')->with('status', 'Data Uji T Berhasil Diimport!');
+
     }
+
+    public function ujiAnava(){
+
+        $ujiAnava = UjiAnava::all();
+
+        return view('/ujiAnava', ['ujiAnava' => $ujiAnava,
+
+        ]);
+
+    }
+
+    public function storeAnava(Request $request){
+
+        $this->validate($request, 
+        [            
+            'x1'      =>  'required|numeric|min:1|max:100',
+            'x2'      =>  'required|numeric|min:1|max:100',
+            'x3'      =>  'required|numeric|min:1|max:100',
+            'x4'      =>  'required|numeric|min:1|max:100',
+        ],
+        [
+            'x1.min'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x1.max'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x1.numeric' => 'Kolom Hanya Bisa Berisi Angka!',
+            'x2.min'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x2.max'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x2.numeric' => 'Kolom Hanya Bisa Berisi Angka!',
+            'x3.min'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x3.max'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x3.numeric' => 'Kolom Hanya Bisa Berisi Angka!',
+            'x4.min'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x4.max'  =>  'Kolom Skor Hanya Bisa Diisi Angka 1-100',
+            'x4.numeric' => 'Kolom Hanya Bisa Berisi Angka!'
+        ]);
+
+        $anava = new UjiAnava;
+        $anava->x1 = $request->x1;
+        $anava->x2 = $request->x2;
+        $anava->x3 = $request->x3;
+        $anava->x4 = $request->x4;
+        $anava->save();
+
+        return redirect('/ujiAnava')->with('status', 'Data Berhasil Tambah');
+
+    }
+
+    public function exportAnava(){
+
+        return Excel::download(new UjiAnavaExport, time().'_'.'DataUjiAnava.xlsx');
+    }
+
+    public function importAnava(Request $request){
+        
+        $this->validate($request, 
+        [            
+            'file'      =>  'required|file|mimes:xlsx,csv'
+        ],
+        [
+            'file'      =>  'File Harus Berekstensi .xlsx atau .csv',            
+        ]);          
+
+        $file = $request->file('file');       
+        $namaFile = $file->getClientOriginalName();
+        $file->move('Anava', $namaFile);
+        
+        $filexcel = Excel::import(new UjiAnavaImport, public_path('/Anava/'.$namaFile));                         
+        
+        return redirect('/ujiAnava')->with('status', 'Data Uji Anava Berhasil Diimport!');
+
+    }
+
 }

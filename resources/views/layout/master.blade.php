@@ -104,9 +104,14 @@
                   </li>                   
                   <li class="nav-item">
                     <a href="/ujiTBerkolerasi" class="nav-link text-white bg-secondary mt-3">
-                      <p>Uji T Berkolerasi</p>
+                      <p>Uji Perbedaan Mean</p>
                     </a>                                    
-                  </li>                                       
+                  </li>  
+                  <li class="nav-item">
+                    <a href="/ujiAnava" class="nav-link text-white bg-secondary mt-3">
+                      <p>Uji Anava</p>
+                    </a>                                    
+                  </li>                                      
                 </ul>
               </li>                   
             </ul>
