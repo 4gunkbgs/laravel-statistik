@@ -159,29 +159,29 @@
                     </tbody>
                     <tr class="text-center">
                         <th> Sigma: </th>                                                                              
-                        <td> {{$sumX1}} </td>
-                        <td> {{$sumX2}}</td>
-                        <td> {{$sumX3}}</td>
-                        <td> {{$sumX4}}</td>
-                        <td>{{$sigmaX1kuadrat}}</td>
-                        <td>{{$sigmaX2kuadrat}}</td>
-                        <td>{{$sigmaX3kuadrat}}</td>
-                        <td>{{$sigmaX4kuadrat}}</td>
-                        <td>{{$sumxtotal}}</td>
-                        <td>{{$sumxtotalkuadrat}}</td>
+                        <th> {{$sumX1}} </th>
+                        <th> {{$sumX2}}</th>
+                        <th> {{$sumX3}}</th>
+                        <th> {{$sumX4}}</th>
+                        <th>{{$sigmaX1kuadrat}}</th>
+                        <th>{{$sigmaX2kuadrat}}</t>
+                        <th>{{$sigmaX3kuadrat}}</th>
+                        <th>{{$sigmaX4kuadrat}}</th>
+                        <th>{{$sumxtotal}}</th>
+                        <th>{{$sumxtotalkuadrat}}</th>
                     </tr>       
                     <tr class="text-center">
                         <th> Rata-Rata: </th>    
-                        <td>{{$avgX1}}</td>
-                        <td>{{$avgX2}}</td>
-                        <td>{{$avgX3}}</td>
-                        <td>{{$avgX4}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <th>{{$avgX1}}</th>
+                        <th>{{$avgX2}}</th>
+                        <th>{{$avgX3}}</th>
+                        <th>{{$avgX4}}</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>                              
                 </table>                                                               
             </div>
