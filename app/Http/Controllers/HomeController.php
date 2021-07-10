@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Anggota;                     //models anggota yang ngurusin tabel user
 use App\Models\ZTabel;
+use App\Models\FTabel;
 use App\Models\Moment;
 use App\Models\Biserial;
 use App\Models\UjiT;
@@ -898,6 +899,49 @@ class HomeController extends Controller
 
         $DKT = $DKD + $DKA;
 
+        //mengecek tabel f, butuh $DKA dan $DKD
+        //function cek label
+        function label($nilai){            
+
+            switch($nilai){
+                case '0': 
+                    $sLabel = 'nol';
+                    break;
+                case '1': 
+                    $sLabel = 'satu';
+                    break;
+                case '2': 
+                    $sLabel = 'dua';
+                    break;
+                case '3': 
+                    $sLabel = 'tiga';
+                    break;
+                case '4': 
+                    $sLabel = 'empat';
+                    break;
+                case '5': 
+                    $sLabel = 'lima';
+                    break;                
+                default: $sLabel = 'Tidak ada field';
+            }
+            
+            return $sLabel;
+        }
+
+        //1. cek label
+        $labelDKA = label($DKA);
+        
+        //2. cek di tabel f
+        $kolom = Ftabel::where('df1', '=', $DKD)->get();                 
+        $fTabel = $kolom[0]->$labelDKA;               
+
+        //cek keterangan
+        if ($F > $fTabel){
+            $status =  "Signifikan";
+        } else {
+            $status =   "Tidak Signifikan";
+        }
+
         return view('/ujiAnava', ['ujiAnava' => $ujiAnava,
                                 'jumlahData' => $jumlahData,
                                 'x1kuadrat' => $X1kuadrat,
@@ -922,7 +966,6 @@ class HomeController extends Controller
                                 'sigmaX3kuadrat' => $sigmaX3kuadrat,
                                 'sigmaX4kuadrat' => $sigmaX4kuadrat,
                                 
-
                                 // antar
                                 'JKA' => $JKA,
                                 'DKA'=>$DKA,
@@ -937,6 +980,12 @@ class HomeController extends Controller
                                 // total 
                                 'jkt' => $JKT, 
                                 'dkt' => $DKT, 
+
+                                //ftabel
+                                'fTabel' => $fTabel,
+
+                                //status
+                                'status' => $status,
                     ]);
 
     }

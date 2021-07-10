@@ -202,8 +202,8 @@
                             <th>JK</th>
                             <th>DK</th>
                             <th>RJK</th>
-                            <th>F</th>
-                            <th>Ftabel</th>
+                            <th>FHitung</th>
+                            <th>Ftabel (5%)</th>
                             <th>Keterangan</th>                                                                                                     
                         </tr>                        
                     </thead>            
@@ -214,8 +214,8 @@
                             <td>{{ number_format($DKA, 2) }}</td>
                             <td>{{ number_format($RJKA, 2) }}</td>
                             <td>{{ number_format($F, 2) }}</td>
-                            <td> - </td>
-                            <td></td>                                                                                                                                                               
+                            <td> {{ $fTabel}} </td>
+                            <td> {{ $status }}</td>                                                                                                                                                               
                         </tr>                                                                                                                      
                     </tbody>
                     <tr class="text-center">
