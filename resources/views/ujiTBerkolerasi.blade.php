@@ -95,7 +95,7 @@
         </div>          
         <div class="card">             
             <div class="card-header border-0">
-                <p class="h3">Uji T Berkolerasi</p>                
+                <p class="h3">Uji T Sampel Berkolerasi</p>                
             </div>
             <div class="card-body">                               
                 <table class="table">                            
@@ -140,8 +140,16 @@
                             <th>{{ $sdX2 }}</th>
                         </tr> 
                         <tr class="text-center">
-                            <th>Nilai Uji T: </th>    
+                            <th>T Hitung: </th>    
                             <th> {{ $nilaiUjiT }}</th>
+                        </tr>
+                        <tr class="text-center">
+                            <th>T Tabel: </th>    
+                            <th> {{ $TTabel }}</th>
+                        </tr>
+                        <tr class="text-center">
+                            <th>Status H0: </th>    
+                            <th> {{ $status }}</th>
                         </tr>
                 </table>                                                               
             </div>

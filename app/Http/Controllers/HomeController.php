@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Anggota;                     //models anggota yang ngurusin tabel user
 use App\Models\ZTabel;
 use App\Models\FTabel;
+use App\Models\TTabel;
 use App\Models\Moment;
 use App\Models\Biserial;
 use App\Models\UjiT;
@@ -727,13 +728,28 @@ class HomeController extends Controller
             $sumX1X2 += $x1Kalix2[$i];
         }       
 
-       //rumus korelasi   
+        //rumus korelasi   
         //dd(number_format($sumX1Kuadrat*$sumX2Kuadrat, 6)); 
        $korelasimoment = number_format($sumX1X2/sqrt($sumX1Kuadrat*$sumX2Kuadrat), 2);                
 
         //nilaiUjiT
        $nilaiUjiT = number_format($rata2x1 - $rata2x2 / sqrt( ( ($variansX1/$n1)+($variansX2/$n2)) - 2*$korelasimoment*( ($sdX1/sqrt($n1)) * ($sdX2/sqrt($n2)) ) ), 2 );       
        
+       //mengecek tabel T, butuh $derajat bebas dan label nilai = 0.05
+       $derajatBebas = $jumlahData - 1;
+       $labelnilai = "limapersen";       
+
+       //1. cek di tabel T
+        $kolom = Ttabel::where('df', '=', $derajatBebas)->get();                       
+        $TTabel = $kolom[0]->$labelnilai;  
+                
+        //cek keterangan
+        if ($nilaiUjiT < $TTabel){
+            $status =  "Diterima";
+        } else {
+            $status =   "Tidak Diterima";
+        }
+                            
         return view('/ujiTBerkolerasi', ['ujiT' => $ujiT,
                                         'rata2x1' => $rata2x1,
                                         'rata2x2' => $rata2x2,
@@ -742,6 +758,8 @@ class HomeController extends Controller
                                         'variansX1' => $variansX1,
                                         'variansX2' => $variansX2,
                                         'nilaiUjiT' => $nilaiUjiT,
+                                        'TTabel' => $TTabel,
+                                        'status' => $status,
                                     ]);
     }
 
