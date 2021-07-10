@@ -106,10 +106,14 @@
 
                 </form>                
             </div>
-        </div>          
+        </div> 
+    </div>
+</div>      
+<div class="row justify-content-center">
+    <div class="col-lg-11">         
         <div class="card">             
             <div class="card-header border-0">
-                <p class="h3">Uji Anava</p>                
+                <p class="h3">Data Uji Anava</p>                
             </div>
             <div class="card-body">                               
                 <table class="table">                            
@@ -117,37 +121,124 @@
                         <tr>
                             <th class="w-25">No</th>
                             <th>X1</th>
-                            <th>X2</th>     
+                            <th>X2</th>  
                             <th>X3</th>   
-                            <th>X4</th>   
-
+                            <th>X4</th>  
+                            <th>X1^2</th>
+                            <th>X2^2</th>   
+                            <th>X3^2</th>
+                            <th>X4^2</th> 
+                            <th>Xt</th>
+                            <th>Xt^2</th>
                             <th> Aksi</th>                                                                                                     
                         </tr>                        
                     </thead>            
                     <tbody class="text-center">      
-                        @foreach ($ujiAnava as $anava)                            
+                        @for ($i = 0; $i < $jumlahData; $i++) <tr>                           
                         <tr>
-                            <th>{{ $loop->iteration }}</th>
-                            <td>{{ $anava->x1 }}</td>                                         
-                            <td>{{ $anava->x2 }}</td> 
-                            <td>{{ $anava->x3 }}</td>                             
-                            <td>{{ $anava->x4 }}</td>
+                            <th>{{ $i+1  }}</th>
+                            <td>{{ $ujiAnava[$i]->x1 }}</td>                                         
+                            <td>{{ $ujiAnava[$i]->x2 }}</td> 
+                            <td>{{ $ujiAnava[$i]->x3 }}</td>                             
+                            <td>{{ $ujiAnava[$i]->x4 }}</td>
+                            <td>{{ $x1kuadrat[$i]}}</td>
+                            <td>{{ $x2kuadrat[$i]}}</td>
+                            <td>{{ $x3kuadrat[$i]}}</td>
+                            <td>{{ $x4kuadrat[$i]}}</td>
+                            <td>{{ $xtotal[$i] }}</td>
+                            <td>{{ $xtotalkuadrat[$i] }}</td>
                             <td>
-                                <form name="delete" action="/hapusAnava/{{ $anava->id }}" method="POST">     {{-- setelah klik hapus, form akan mengarah ke route delete--}}                                            
+                                <form name="delete" action="/hapusAnava/{{ $ujiAnava[$i]->id }}" method="POST">     {{-- setelah klik hapus, form akan mengarah ke route delete--}}                                            
                                     @csrf               {{-- csrf token untuk tombol hapus--}}
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger">Hapus</button>
                                 </form>
                             </td>                                                                                                                                                                
                         </tr>                                                        
-                        @endforeach                                              
+                        @endfor                                              
                     </tbody>
                     <tr class="text-center">
-                        <th> Rata-Rata: </th>                                                                              
-                    </tr>                                     
+                        <th> Sigma: </th>                                                                              
+                        <td> {{$sumX1}} </td>
+                        <td> {{$sumX2}}</td>
+                        <td> {{$sumX3}}</td>
+                        <td> {{$sumX4}}</td>
+                        <td>{{$sigmaX1kuadrat}}</td>
+                        <td>{{$sigmaX2kuadrat}}</td>
+                        <td>{{$sigmaX3kuadrat}}</td>
+                        <td>{{$sigmaX4kuadrat}}</td>
+                        <td>{{$sumxtotal}}</td>
+                        <td>{{$sumxtotalkuadrat}}</td>
+                    </tr>       
+                    <tr class="text-center">
+                        <th> Rata-Rata: </th>    
+                        <td>{{$avgX1}}</td>
+                        <td>{{$avgX2}}</td>
+                        <td>{{$avgX3}}</td>
+                        <td>{{$avgX4}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>                              
                 </table>                                                               
             </div>
-        </div>
+        </div>        
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-11">         
+        <div class="card">             
+            <div class="card-header border-0">
+                <p class="h3">Tabel Uji Anava</p>                
+            </div>
+            <div class="card-body">                               
+                <table class="table">                            
+                    <thead class="text-center">
+                        <tr>
+                            <th>Sumber Variasi</th>
+                            <th>JK</th>
+                            <th>DK</th>
+                            <th>RJK</th>
+                            <th>F</th>
+                            <th>Ftabel</th>
+                            <th>Keterangan</th>                                                                                                     
+                        </tr>                        
+                    </thead>            
+                    <tbody class="text-center">                                                         
+                        <tr>
+                            <th>Antar :</th>
+                            <td>{{ number_format($JKA, 2) }}</td>
+                            <td>{{ number_format($DKA, 2) }}</td>
+                            <td>{{ number_format($RJKA, 2) }}</td>
+                            <td>{{ number_format($F, 2) }}</td>
+                            <td> - </td>
+                            <td></td>                                                                                                                                                               
+                        </tr>                                                                                                                      
+                    </tbody>
+                    <tr class="text-center">
+                        <th>Dalam :</th>
+                        <td>{{ number_format($jkd, 2) }}</td>
+                        <td>{{ number_format($dkd, 2) }}</td>
+                        <td>{{ number_format($rjkd,2) }}</td>
+                        <td> - </td>
+                        <td> - </td>
+                        <td></td>
+                    </tr>       
+                    <tr class="text-center">
+                        <th>Total :</th>
+                        <td>{{ number_format($jkt, 2) }}</td>
+                        <td>{{ number_format($dkt, 2) }}</td>
+                        <td> - </td>
+                        <td> - </td>
+                        <td> - </td>
+                        <td></td>
+                    </tr>                              
+                </table>                                                               
+            </div>
+        </div>        
     </div>
 </div>
 @endsection
